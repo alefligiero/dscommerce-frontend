@@ -1,25 +1,29 @@
-import computerImg from "../../assets/computer.png";
-import ProductCategory from "../ProductCategory";
 import "./styles.css";
+import { ProductDTO } from "../../models/product";
+import ProductCategory from "../ProductCategory";
 
-export default function ProductDetailsCard() {
+type Props = {
+  product: ProductDTO;
+}
+
+export default function ProductDetailsCard({product}: Props) {
   return (
     <div className="dsc-card dsc-mb20">
       <div className="dsc-product-details-top dsc-line-bottom">
-        <img src={computerImg} alt="Computador" />
+        <img src={product.imgUrl} alt={product.name} />
       </div>
       <div className="dsc-product-details-bottom">
-        <h3>R$ 5000,00</h3>
-        <h4>Computador Gamer XT</h4>
+        <h3>R$ {product.price.toFixed(2)}</h3>
+        <h4>{product.name}</h4>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-          quaerat provident iusto id, ad excepturi itaque eveniet ratione illum
-          nam! Harum vero tempore dolorum minima libero tempora, in cupiditate
-          earum!
+          {product.description}
         </p>
         <div className="dsc-category-container">
-          <ProductCategory />
-          <ProductCategory />
+          {
+            product.categories.map(item => (
+              <ProductCategory key={item.id} name={item.name}/>
+            ))
+          }
         </div>
       </div>
     </div>
