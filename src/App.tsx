@@ -1,7 +1,7 @@
-import ProductDetails from "./routes/ProductDetails";
+import ProductCatalog from "./routes/ProductCatalog";
 
 export default function App() {
   return (
-    <ProductDetails />
+    <ProductCatalog />
   );
 }
