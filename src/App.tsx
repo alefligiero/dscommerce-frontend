@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ProductCatalog from "./routes/ClientHome/ProductCatalog";
 import ClientHome from "./routes/ClientHome";
 import ProductDetails from "./routes/ClientHome/ProductDetails";
@@ -12,6 +12,7 @@ export default function App() {
           <Route path="product-catalog" element={<ProductCatalog />} />
           <Route path="product-details/:productId" element={<ProductDetails />} />
         </Route>
+        <Route path="*" element={<Navigate to={"/"}/>}></Route>
       </Routes>
     </BrowserRouter>
   );
