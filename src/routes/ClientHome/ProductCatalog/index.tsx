@@ -29,6 +29,7 @@ export default function ProductCatalog() {
         setProducts(products.concat(nextPage));
         setIsLastPage(response.data.last);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryParams]);
 
   function handleSearch(searchText: string) {
