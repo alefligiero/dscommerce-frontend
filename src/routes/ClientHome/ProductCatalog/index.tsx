@@ -5,7 +5,6 @@ import ButtonNextPage from "../../../components/ButtonNextPage";
 import { useEffect, useState } from "react";
 import { ProductDTO } from "../../../models/product";
 import * as productService from "../../../services/product-service";
-import { hasAnyRoles } from "../../../services/auth-service";
 
 type QueryParams = {
   page: number;
@@ -23,8 +22,6 @@ export default function ProductCatalog() {
   });
 
   useEffect(() => {
-    console.log("TESTE", hasAnyRoles([]));
-
     productService
       .findPageRequest(queryParams.page, queryParams.name)
       .then((response) => {
