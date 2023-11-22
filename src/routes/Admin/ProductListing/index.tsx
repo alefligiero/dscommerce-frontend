@@ -4,6 +4,8 @@ import deleteIcon from "../../../assets/delete.svg";
 import { useEffect, useState } from "react";
 import * as productService from "../../../services/product-service";
 import { ProductDTO } from "../../../models/product";
+import SearchBar from "../../../components/SearchBar";
+import ButtonNextPage from "../../../components/ButtonNextPage";
 
 type QueryParams = {
     page: number;
@@ -31,6 +33,15 @@ export default function ProductListing() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryParams]);
 
+    function handleSearch(searchText: string) {
+        setProducts([]);
+        setQueryParams({ ...queryParams, page: 0, name: searchText });
+    }
+
+    function handleNextPageClick() {
+        setQueryParams({ ...queryParams, page: queryParams.page + 1 });
+    }
+
     return (
         <main>
             <section id="product-listing-section" className="dsc-container">
@@ -40,24 +51,22 @@ export default function ProductListing() {
                 <div className="dsc-btn-page-container dsc-mb20">
                     <div className="dsc-btn dsc-btn-white">Novo</div>
                 </div>
-                <form className="dsc-search-bar">
-                    <button type="submit">🔎︎</button>
-                    <input type="text" placeholder="Nome do produto" />
-                    <button type="reset">🗙</button>
-                </form>
+                <SearchBar onSearch={handleSearch} />
 
                 <table className="dsc-table dsc-mb20 dsc-mt20">
                     <thead>
-                        <th className="dsc-tb576">ID</th>
-                        <th></th>
-                        <th className="dsc-tb768">Preço</th>
-                        <th className="dsc-txt-left">Nome</th>
-                        <th></th>
-                        <th></th>
+                        <tr>
+                            <th className="dsc-tb576">ID</th>
+                            <th></th>
+                            <th className="dsc-tb768">Preço</th>
+                            <th className="dsc-txt-left">Nome</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
                         {products.map((product) => (
-                            <tr>
+                            <tr key={product.id}>
                                 <td className="dsc-tb576">{product.id}</td>
                                 <td>
                                     <img
@@ -89,7 +98,11 @@ export default function ProductListing() {
                     </tbody>
                 </table>
 
-                <div className="dsc-btn-next-page">Carregar mais</div>
+                {!isLastPage && (
+                    <div onClick={handleNextPageClick}>
+                        <ButtonNextPage />
+                    </div>
+                )}
             </section>
         </main>
     );
