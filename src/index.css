@@ -137,6 +137,12 @@ a, a:hover {
     font-size: 12px;
 }
 
+.dsc-logged-user span {
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
 @media (min-width: 576px) {
     nav h1 {
         font-size: 24px;
