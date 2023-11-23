@@ -396,3 +396,7 @@ a, a:hover {
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
 }
+
+.dsc-dialog-btn {
+    width: 100%;
+}
