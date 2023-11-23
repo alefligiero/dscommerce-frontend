@@ -1,28 +1,33 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import ProductCatalog from "./routes/ClientHome/ProductCatalog";
-import ClientHome from "./routes/ClientHome";
-import ProductDetails from "./routes/ClientHome/ProductDetails";
-import Cart from "./routes/ClientHome/Cart";
 import { useEffect, useState } from "react";
-import { ContextCartCount } from "./utils/context-cart";
-import Login from "./routes/ClientHome/Login";
-import Admin from "./routes/Admin";
-import AdminHome from "./routes/Admin/AdminHome";
-import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
-import { history } from "./utils/history";
+import {
+  unstable_HistoryRouter as HistoryRouter,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { AccessTokenPayloadDTO } from "./models/auth";
-import { ContextToken } from "./utils/content-token";
-import * as cartService from "./services/cart-service";
-import * as authService from "./services/auth-service";
-import Confirmation from "./routes/ClientHome/Confirmation";
-import ProductListing from "./routes/Admin/ProductListing";
+import Admin from "./routes/Admin";
+import AdminHome from "./routes/Admin/AdminHome";
 import ProductForm from "./routes/Admin/ProductForm";
+import ProductListing from "./routes/Admin/ProductListing";
+import ClientHome from "./routes/ClientHome";
+import Cart from "./routes/ClientHome/Cart";
+import Confirmation from "./routes/ClientHome/Confirmation";
+import Login from "./routes/ClientHome/Login";
+import ProductCatalog from "./routes/ClientHome/ProductCatalog";
+import ProductDetails from "./routes/ClientHome/ProductDetails";
+import * as authService from "./services/auth-service";
+import * as cartService from "./services/cart-service";
+import { ContextToken } from "./utils/content-token";
+import { ContextCartCount } from "./utils/context-cart";
+import { history } from "./utils/history";
 
 export default function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
 
-  const [contextTokenPayload, setContextTokenPayload] = useState<AccessTokenPayloadDTO>();
+  const [contextTokenPayload, setContextTokenPayload] =
+    useState<AccessTokenPayloadDTO>();
 
   useEffect(() => {
     setContextCartCount(cartService.getCart().items.length);
@@ -34,8 +39,12 @@ export default function App() {
   }, []);
 
   return (
-    <ContextToken.Provider value={{ contextTokenPayload, setContextTokenPayload }}>
-      <ContextCartCount.Provider value={{ contextCartCount, setContextCartCount }}>
+    <ContextToken.Provider
+      value={{ contextTokenPayload, setContextTokenPayload }}
+    >
+      <ContextCartCount.Provider
+        value={{ contextCartCount, setContextCartCount }}
+      >
         <HistoryRouter history={history}>
           <Routes>
             <Route path="/" element={<ClientHome />}>
@@ -49,7 +58,11 @@ export default function App() {
               <Route path="login" element={<Login />} />
               <Route
                 path="confirmation/:orderId"
-                element={<PrivateRoute><Confirmation /></PrivateRoute>}
+                element={
+                  <PrivateRoute>
+                    <Confirmation />
+                  </PrivateRoute>
+                }
               />
             </Route>
             <Route
