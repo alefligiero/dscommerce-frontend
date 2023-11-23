@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import deleteIcon from "../../../assets/delete.svg";
 import editIcon from "../../../assets/edit.svg";
 import ButtonNextPage from "../../../components/ButtonNextPage";
+import DialogConfirmation from "../../../components/DialogConfirmation";
 import DialogInfo from "../../../components/DialogInfo";
 import SearchBar from "../../../components/SearchBar";
 import { ProductDTO } from "../../../models/product";
@@ -17,6 +18,11 @@ export default function ProductListing() {
   const [dialogInfoData, setDialogInfoData] = useState({
     visible: false,
     message: "Operação com Sucesso!",
+  });
+
+  const [dialogConfirmationData, setDialogConfirmationData] = useState({
+    visible: false,
+    message: "Tem certeza?",
   });
 
   const [isLastPage, setIsLastPage] = useState(false);
@@ -36,6 +42,7 @@ export default function ProductListing() {
         setProducts(products.concat(nextPage));
         setIsLastPage(response.data.last);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryParams]);
 
   function handleSearch(searchText: string) {
@@ -52,7 +59,12 @@ export default function ProductListing() {
   }
 
   function handleDeleteClick() {
-    setDialogInfoData({ ...dialogInfoData, visible: true });
+    setDialogConfirmationData({ ...dialogConfirmationData, visible: true });
+  }
+
+  function handleDialogConfirmationAnswer(answer: boolean) {
+    console.log(answer);
+    setDialogConfirmationData({ ...dialogConfirmationData, visible: false });
   }
 
   return (
@@ -118,6 +130,12 @@ export default function ProductListing() {
         <DialogInfo
           message={dialogInfoData.message}
           onDialogClose={handleDialogInfoClose}
+        />
+      )}
+      {dialogConfirmationData.visible && (
+        <DialogConfirmation
+          message={dialogConfirmationData.message}
+          onDialogAnswer={handleDialogConfirmationAnswer}
         />
       )}
     </main>
